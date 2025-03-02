@@ -1,0 +1,11 @@
+{
+  "name": "koverae-billing",
+  "version": "1.0.0",
+  "description": "[![Latest Version on Packagist](https://img.shields.io/packagist/v/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing) [![Total Downloads](https://img.shields.io/packagist/dt/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing) ![GitHub Actions](https://github.com/koverae/koverae-billing/actions/workflows/main.yml/badge.svg)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arden",
+  "license": "MIT"
+}
