@@ -1,0 +1,54 @@
+{
+    "name": "koverae/koverae-billing",
+    "description": "Koverae Billing is a lightweight yet powerful Laravel package for managing subscriptions and billing. Designed for simplicity and flexibility, it enables businesses to handle subscription plans, free trials, and user billing seamlessly.",
+    "keywords": [
+        "koverae",
+        "koverae-billing"
+    ],
+    "homepage": "https://github.com/koverae/koverae-billing",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Arden BOUET",
+            "email": "laudbouetoumoussa@koverae.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Koverae\\KoveraeBilling\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Koverae\\KoveraeBilling\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Koverae\\KoveraeBilling\\KoveraeBillingServiceProvider"
+            ],
+            "aliases": {
+                "KoveraeBilling": "Koverae\\KoveraeBilling\\KoveraeBillingFacade"
+            }
+        }
+    }
+}
