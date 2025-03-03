@@ -44,7 +44,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Koverae\\KoveraeBilling\\Provider\\KoveraeBillingServiceProvider"
+                "Koverae\\KoveraeBilling\\Providers\\KoveraeBillingServiceProvider"
             ],
             "aliases": {
                 "KoveraeBilling": "Koverae\\KoveraeBilling\\KoveraeBillingFacade"
