@@ -1,6 +1,6 @@
 <?php
 
-namespace Koverae\KoveraeBilling\Providers;
+namespace Koverae\KoveraeBilling;
 
 use Illuminate\Support\ServiceProvider;
 use Koverae\KoveraeBilling\KoveraeBilling;
