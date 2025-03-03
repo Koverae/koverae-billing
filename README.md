@@ -20,7 +20,7 @@ Click on each version to read documentation.
 
 | Laravel | Laravel Subby                                  |
 |:--------|:-----------------------------------------------|
-| 9.x     | [v1.x](/v1.x/), [v2.x](/v2.x/)                 |
+| 9.x     | [v1.x](/docs/v1.x/), [v2.x](/docs/v2.x/)                 |
 
 
 ## Credits
