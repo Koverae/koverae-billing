@@ -18,7 +18,7 @@ Originally forked from [bpuig/laravel-subby](https://github.com/bpuig/laravel-su
 
 Click on each version to read documentation.
 
-| Laravel | Laravel Subby                                  |
+| Laravel | Koverae Billing                                  |
 |:--------|:-----------------------------------------------|
 | 9.x     | [v1.x](/docs/v1.x/), [v2.x](/docs/v2.x/)                 |
 
