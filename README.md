@@ -9,21 +9,18 @@
 Koverae Billing is a lightweight yet powerful Laravel package for managing subscriptions and billing. Designed for simplicity and flexibility, it enables businesses to handle subscription plans, free trials, and user billing seamlessly.
 
 
-Originally forked from [rinvex/laravel-subscriptions](https://github.com/rinvex/laravel-subscriptions).
+Originally forked from [bpuig/laravel-subby](https://github.com/bpuig/laravel-subby).
 
 ## Version Compatibility
 
-::: tip CURRENT VERSION Current stable version is v7
+::: tip CURRENT VERSION Current stable version is v1.0
 :::
 
 Click on each version to read documentation.
 
 | Laravel | Laravel Subby                                  |
 |:--------|:-----------------------------------------------|
-| 9.x     | [v6.x](/v6.x/), [v7.x](/v7.x/)                 |
-| 8.x     | [v3.x](/v3.x/), [v4.x](/v4.x/), [v5.x](/v5.x/) |
-| 7.x     | [v4.x](/v4.x/)                                 |
-| 6.x     | [v4.x](/v4.x/)                                 |
+| 9.x     | [v1.x](/v1.x/), [v2.x](/v2.x/)                 |
 
 
 ## Credits
@@ -37,10 +34,10 @@ Refer to the [Releases](https://github.com/bpuig/laravel-subby/releases) for a c
 
 ## License
 
-Forked originally from [bpuig/subby](https://github.com/bpuig/subby). Thank you for
+Forked originally from [bpuig/laravel-subby](https://github.com/bpuig/laravel-subby). Thank you for
 creating the original!
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-&copy; 2020 - 2023 B. Puig, Some rights reserved.
+&copy; 2025 | Arden BOUET, Some rights reserved.
 
