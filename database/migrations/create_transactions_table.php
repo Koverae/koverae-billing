@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create(config('koverae-billing.tables.transations'), function (Blueprint $table) {
+        Schema::create(config('koverae-billing.tables.transactions'), function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('team_id')->nullable();
             $table->uuid('uuid')->unique();
