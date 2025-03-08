@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create(config('koverae-billing.tables.transations'), function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('team_id')->nullable();
             $table->uuid('uuid')->unique();
             $table->foreignId('subscription_id')->constrained('plan_subscriptions')->onDelete('cascade');
             $table->string('payment_method')->nullable();

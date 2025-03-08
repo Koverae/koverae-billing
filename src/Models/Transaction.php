@@ -14,6 +14,7 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'team_id',
         'uuid',
         'subscription_id',
         'payment_method',
