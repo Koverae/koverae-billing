@@ -22,8 +22,8 @@ return new class extends Migration {
             $table->decimal('signup_fee')->default('0.00');
             $table->unsignedSmallInteger('invoice_period')->default(1);
             $table->string('invoice_interval')->default('month');
-            $table->dropUnique('unique_plan_combination');
-            
+            // $table->dropUnique('unique_plan_combination');
+
             $table->timestamps();
 
             $table->unique(['plan_id','country', 'currency', 'invoice_period', 'invoice_interval'], 'unique_plan_combination');
