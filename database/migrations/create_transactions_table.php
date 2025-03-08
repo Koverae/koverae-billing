@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('team_id')->nullable();
             $table->uuid('uuid')->unique();
-            $table->foreignId('subscription_id')->constrained('plan_subscriptions')->onDelete('cascade');
+            $table->unsignedBigInteger('subscription_id');
             $table->string('payment_method')->nullable();
             $table->string('currency', 3);
             $table->decimal('amount', 10, 2);
