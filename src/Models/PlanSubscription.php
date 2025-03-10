@@ -35,6 +35,7 @@ class PlanSubscription extends Model
      */
     protected $fillable = [
         'tag',
+        'subscription_code',
         'subscriber_id',
         'subscriber_type',
         'plan_id',

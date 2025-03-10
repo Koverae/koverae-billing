@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create(config('koverae-billing.tables.plan_subscriptions'), function (Blueprint $table) {
             $table->increments('id');
             $table->string('tag');
+            $table->string('subscription_code')->nullable();
             $table->morphs('subscriber');
             $table->unsignedInteger('plan_id')->nullable();
             $table->string('name')->nullable();

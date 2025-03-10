@@ -33,6 +33,7 @@ return [
     'services' => [
         'payment_methods' => [
             'free' => \Koverae\KoveraeBilling\Services\PaymentMethods\Free::class,
+            'paystack' =>  '',
             'm-pesa' =>  '',
             'credit_card' => '',
         ]
