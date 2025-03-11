@@ -13,10 +13,28 @@ use Koverae\KoveraeBilling\Services\SubscriptionPeriod;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Cache;
 use InvalidArgumentException;
 
 trait HasSubscriptions
 {
+    public function subscribedFeature(string $featureTag): bool
+    {
+        if (!$this->subscriptions()->exists()) {
+            return false;
+        }
+    
+        // Cache the result for 5 minutes per user (adjust as needed)
+        return Cache::remember("user:{$this->id}:feature:{$featureTag}", now()->addMinutes(5), function () use ($featureTag) {
+            return $this->subscriptions()
+                ->with(['plan.features']) // Eager load plan features
+                ->get()
+                ->reject->isInactive() // Only active subscriptions
+                ->flatMap->plan->pluck('features') // Get all features
+                ->contains('tag', $featureTag);
+        });
+    }
+
     /**
      * Define a polymorphic one-to-many relationship.
      *
@@ -160,5 +178,7 @@ trait HasSubscriptions
 
         throw new DuplicateException();
     }
+
+
 }
 

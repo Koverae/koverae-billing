@@ -4,6 +4,12 @@ namespace Koverae\KoveraeBilling;
 
 use Illuminate\Support\ServiceProvider;
 use Koverae\KoveraeBilling\KoveraeBilling;
+use Koverae\KoveraeBilling\Services\Console\InstallCommand;
+use Koverae\KoveraeBilling\Services\Console\SendSubscriptionRemindersCommand;
+use Illuminate\Support\Facades\Blade;
+use App\Models\Team\Team;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class KoveraeBillingServiceProvider extends ServiceProvider
 {
@@ -14,6 +20,24 @@ class KoveraeBillingServiceProvider extends ServiceProvider
     {
         $this->publishConfig();
         $this->publishMigrations();
+
+        $this->commands([
+            InstallCommand::class,
+            SendSubscriptionRemindersCommand::class,
+        ]);
+
+        Blade::if('subscribeFeature', function ($featureTag) {
+            
+            $user = User::find(Auth::user()->id);
+            $team = Team::find($user->company->team_id);
+    
+            if (!$team) {
+                abort(403, 'No team found.');
+            }
+            // Result you got "@subscribeFeature "@endsubscribeFeature
+    
+            return $team && $team->subscribedFeature($featureTag);
+        });
     }
 
     /**
@@ -49,17 +73,31 @@ class KoveraeBillingServiceProvider extends ServiceProvider
      */
     protected function publishMigrations()
     {
-        $this->publishes([
-            __DIR__ . '/../database/migrations/create_plans_table.php' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_plans_table.php'),
-            __DIR__ . '/../database/migrations/create_plan_features_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 1) . '_create_plan_features_table.php'),
-            __DIR__ . '/../database/migrations/create_plan_subscriptions_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 2) . '_create_plan_subscriptions_table.php'),
-            __DIR__ . '/../database/migrations/create_plan_subscription_features_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 3) . '_create_plan_subscription_features_table.php'),
-            __DIR__ . '/../database/migrations/create_plan_subscription_usage_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 4) . '_create_plan_subscription_usage_table.php'),
-            __DIR__ . '/../database/migrations/create_plan_subscription_schedules_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 5) . '_create_plan_subscription_schedules_table.php'),
-            __DIR__ . '/../database/migrations/create_plan_combinations_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 6) . '_create_plan_combinations_table.php'),
-            __DIR__ . '/../database/migrations/create_transactions_table.php' => database_path('migrations/' . date('Y_m_d_His', time() + 6) . '_create_transactions_table.php')
-        ], 'koverae-billing.migrations');
+        $timestamp = now()->format('Y_m_d_His');
 
+        $migrations = [
+            'create_plans_table.php',
+            'create_plan_features_table.php',
+            'create_plan_subscriptions_table.php',
+            'create_plan_subscription_features_table.php',
+            'create_plan_subscription_usage_table.php',
+            'create_plan_subscription_schedules_table.php',
+            'create_plan_combinations_table.php',
+            'create_transactions_table.php',
+        ];
+
+        $migrationFiles = [];
+
+        foreach ($migrations as $index => $migration) {
+            $migrationFiles[__DIR__ . "/../database/migrations/{$migration}"] =
+                database_path("migrations/{$timestamp}_{$migration}");
+            
+            // Increment timestamp safely
+            $timestamp = now()->addSeconds(1)->format('Y_m_d_His');
+        }
+
+        $this->publishes($migrationFiles, 'koverae-billing.migrations');
     }
+    
 
 }

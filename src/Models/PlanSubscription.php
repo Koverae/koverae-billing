@@ -36,6 +36,8 @@ class PlanSubscription extends Model
     protected $fillable = [
         'tag',
         'subscription_code',
+        'paystack_authorization',
+        'paystack_customer',
         'subscriber_id',
         'subscriber_type',
         'plan_id',

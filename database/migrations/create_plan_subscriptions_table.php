@@ -19,6 +19,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('tag');
             $table->string('subscription_code')->nullable();
+            $table->string('paystack_authorization')->nullable();
+            $table->string('paystack_customer')->nullable();
             $table->morphs('subscriber');
             $table->unsignedInteger('plan_id')->nullable();
             $table->string('name')->nullable();
@@ -33,6 +35,7 @@ return new class extends Migration
             $table->string('invoice_interval')->default('month');
             $table->string('payment_method')->nullable()->default('free');
             $table->unsignedMediumInteger('tier')->default(0);
+            $table->string('status')->default('trial');
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('starts_at')->nullable();
             $table->timestamp('ends_at')->nullable();

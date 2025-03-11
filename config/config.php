@@ -36,6 +36,21 @@ return [
             'paystack' =>  '',
             'm-pesa' =>  '',
             'credit_card' => '',
-        ]
-    ]
+        ],
+        'reminders' => [
+            'send_reminder' => \Koverae\KoveraeBilling\Services\Billing\ReminderService::class,
+        ],
+    ],
+
+    'reminders' => [
+        'trial' => [2, 1, 0, -1], // Days before/after trial ends
+        'renewal' => [5, 2, 0, -1], // Days before/after renewal
+        'grace_period' => [-2, -5], // Days after expiration but before deactivation
+        'failed_payment' => [0, -3, -7], // Days after failed payment
+    ],
+    'notification_channels' => [
+        'mail', 
+        'database', 
+        // 'vonage'
+    ], // Define active channels
 ];
