@@ -16,10 +16,14 @@ use Koverae\KoveraeBilling\Models\Transaction;
 
 class Paystack implements PaymentMethodService
 {
-    // use IsPaymentMethod;
-
     protected $secretKey;
     protected $baseUrl;
+
+    public function __construct()
+    {
+        $this->secretKey = env('PAYSTACK_SECRET_KEY'); // Store in .env
+        $this->baseUrl = env('PAYSTACK_PAYMENT_URL', 'https://api.paystack.co');
+    }
 
     /**
      * Charge desired amount
@@ -28,12 +32,6 @@ class Paystack implements PaymentMethodService
     public function charge()
     {
         // Nothing is charged, no exception is raised
-    }
-
-    public function __construct()
-    {
-        $this->secretKey = env('PAYSTACK_SECRET_KEY'); // Store in .env
-        $this->baseUrl = env('PAYSTACK_PAYMENT_URL', 'https://api.paystack.co');
     }
 
 
@@ -45,7 +43,7 @@ class Paystack implements PaymentMethodService
     * @param string|null $plan Optional plan code for subscriptions.
     * @return \Illuminate\Http\RedirectResponse Redirects to Paystack's payment page.
     */
-    public function initializePayment($email, $amount, $plan = null)
+    public function initializePayment($name = null, $email, $amount, $plan = null, $period = 1, $interval = 'month')
     {
         $amount = $amount * 100; // Paystack processes payments in kobo (cents), so multiply by 100.
         $client = new Client();
@@ -56,12 +54,15 @@ class Paystack implements PaymentMethodService
                 'Content-Type' => 'application/json',
             ],
             'json' => [
+                'name' => $name,
                 'email' => $email,
                 'amount' => $amount,
                 'plan' => $plan,
                 'callback_url' => route('paystack.callback'),// Redirect after payment
                 'metadata' => [
                     'team_id' => current_company()->team->id, // Attach team ID for reference
+                    'invoice_period' => $period,
+                    'invoice_interval' => $interval,
                     // 'subscription_id' => $subscription->id,
                 ]
             ]
@@ -125,9 +126,13 @@ class Paystack implements PaymentMethodService
         DB::transaction(function () use ($subscription, $result, $team, $subscriptionCode) {
             // Update the subscription with the new billing period
             $subscription->update([
+                'paystack_authorization' => $team->subscription('main')->paystack_authorization ?? $result->data->authorization->authorization_code,
+                'paystack_customer' => $team->subscription('main')->paystack_customer ?? $result->data->customer->customer_code,
                 'subscription_code' => $subscriptionCode,
+                'invoice_period' => $result->data->metadata->invoice_period,
+                'invoice_interval' => $result->data->metadata->invoice_interval,
                 'starts_at' => now(),
-                'ends_at' => calculateEndDate($subscription->invoice_interval ?? 'month'),
+                'ends_at' => calculateEndDate($result->data->metadata->invoice_interval, $result->data->metadata->invoice_period),
                 'trial_ends_at' => null,
             ]);
 
@@ -200,5 +205,6 @@ class Paystack implements PaymentMethodService
         // Return an error response if the event is not handled
         return response()->json(['message' => 'Event not handled'], 400);
     }
+
 
 }
