@@ -4,8 +4,8 @@ namespace Koverae\KoveraeBilling;
 
 use Illuminate\Support\ServiceProvider;
 use Koverae\KoveraeBilling\KoveraeBilling;
-use Koverae\KoveraeBilling\Services\Console\InstallCommand;
-use Koverae\KoveraeBilling\Services\Console\SendSubscriptionRemindersCommand;
+use Koverae\KoveraeBilling\Console\InstallCommand;
+use Koverae\KoveraeBilling\Console\SendSubscriptionRemindersCommand;
 use Illuminate\Support\Facades\Blade;
 use App\Models\Team\Team;
 use App\Models\User;
@@ -20,22 +20,22 @@ class KoveraeBillingServiceProvider extends ServiceProvider
     {
         $this->publishConfig();
         $this->publishMigrations();
-        
+
         $this->commands([
             InstallCommand::class,
             SendSubscriptionRemindersCommand::class,
         ]);
 
         Blade::if('subscribeFeature', function ($featureTag) {
-            
+
             $user = User::find(Auth::user()->id);
             $team = Team::find($user->company->team_id);
-    
+
             if (!$team) {
                 abort(403, 'No team found.');
             }
             // Result you got "@subscribeFeature "@endsubscribeFeature
-    
+
             return $team && $team->subscribedFeature($featureTag);
         });
     }
@@ -91,13 +91,13 @@ class KoveraeBillingServiceProvider extends ServiceProvider
         foreach ($migrations as $index => $migration) {
             $migrationFiles[__DIR__ . "/../database/migrations/{$migration}"] =
                 database_path("migrations/{$timestamp}_{$migration}");
-            
+
             // Increment timestamp safely
             $timestamp = now()->addSeconds(1)->format('Y_m_d_His');
         }
 
         $this->publishes($migrationFiles, 'koverae-billing.migrations');
     }
-    
+
 
 }

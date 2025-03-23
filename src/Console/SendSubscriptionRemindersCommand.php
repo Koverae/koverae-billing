@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Koverae\KoveraeBilling\Services\Console;
+namespace Koverae\KoveraeBilling\Console;
 
 use Illuminate\Console\Command;
 use Koverae\KoveraeBilling\Models\PlanSubscription;
