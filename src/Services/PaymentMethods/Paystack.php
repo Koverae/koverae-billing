@@ -77,6 +77,9 @@ class Paystack implements PaymentMethodService
         if ($result['status']) {
             return redirect($result['data']['authorization_url']);
         }
+        // if ($result->status) {
+        //     return redirect($result->data->authorization_url);
+        // }
 
         // Return with an error message if initialization failed
         return back()->with('error', 'Payment initiation failed.');
