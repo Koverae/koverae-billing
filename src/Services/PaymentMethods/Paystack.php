@@ -71,11 +71,11 @@ class Paystack implements PaymentMethodService
             ]
         ]);
 
-        $result = json_decode($response->getBody());
+        $result = json_decode($response->getBody()->getContents(), true); // Use true for an associative array
 
         // Redirect to Paystack payment page if the initialization was successful
-        if ($result->status) {
-            return redirect($result->data->authorization_url);
+        if ($result['status']) {
+            return redirect($result['data']['authorization_url']);
         }
 
         // Return with an error message if initialization failed
