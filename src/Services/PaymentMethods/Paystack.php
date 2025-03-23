@@ -6,23 +6,26 @@ namespace Koverae\KoveraeBilling\Services\PaymentMethods;
 
 use App\Models\Team\Team;
 use GuzzleHttp\Client;
-use Koverae\KoveraeBilling\Contracts\PaymentMethodService;
-use Koverae\KoveraeBilling\Traits\IsPaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
+use Koverae\KoveraeBilling\Contracts\PaymentMethodService;
+use Koverae\KoveraeBilling\Traits\IsPaymentMethod;
 use Koverae\KoveraeBilling\Models\PlanSubscription;
 use Koverae\KoveraeBilling\Models\Transaction;
 
 class Paystack implements PaymentMethodService
 {
+    use IsPaymentMethod;
+
     protected $secretKey;
     protected $baseUrl;
 
     public function __construct()
     {
-        $this->secretKey = env('PAYSTACK_SECRET_KEY'); // Store in .env
-        $this->baseUrl = env('PAYSTACK_PAYMENT_URL', 'https://api.paystack.co');
+        $this->secretKey = config('koverae-billing.paystack.secret_key'); // Store in .env
+        $this->baseUrl = config('koverae-billing.paystack.base_url');
     }
 
     /**

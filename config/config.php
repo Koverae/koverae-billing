@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 
 return [
+
     'main_subscription_tag' => 'main',
     'fallback_plan_tag' => null,
     // Database Tables
@@ -33,9 +34,8 @@ return [
     'services' => [
         'payment_methods' => [
             'free' => \Koverae\KoveraeBilling\Services\PaymentMethods\Free::class,
-            'paystack' =>  '',
-            'm-pesa' =>  '',
-            'credit_card' => '',
+            'paystack' =>  \Koverae\KoveraeBilling\Services\PaymentMethods\Paystack::class,
+            'paypal' =>  '',
         ],
         'reminders' => [
             'send_reminder' => \Koverae\KoveraeBilling\Services\Billing\ReminderService::class,
@@ -49,8 +49,24 @@ return [
         'failed_payment' => [0, -3, -7], // Days after failed payment
     ],
     'notification_channels' => [
-        'mail', 
-        'database', 
+        'mail',
+        'database',
         // 'vonage'
     ], // Define active channels
+
+    // PAYSTACK
+    'paystack' => [
+        'public_key' => env('PAYSTACK_PUBLIC_KEY'),
+        'secret_key' => env('PAYSTACK_SECRET_KEY'),
+        'base_url' => env('PAYSTACK_PAYMENT_URL', 'https://api.paystack.co'),
+        'merchand_email' => env('PAYSTACK_MERCHANT_EMAIL'),
+    ],
+
+    // KOVERAE TECHNOLOGIES
+    'koverae' => [
+        'public_key' => env('KOVERAE_PUBLIC_KEY', ''),
+        'secret_key' => env('KOVERAE_SECRET_KEY', ''),
+        'base_url' => env('KOVERAE_PAYMENT_URL', 'https://api.koverae.com'),
+    ]
+
 ];

@@ -1,0 +1,34 @@
+name: Deploy Docs to CPanel
+
+on:
+  push:
+    branches:
+      - main  # Change if your default branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Docusaurus Site
+      run: npm run build
+
+    - name: Deploy to CPanel
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: "developer.koverae.com"  # Your CPanel domain
+        username: "YOUR_CPanel_USERNAME"
+        key: "${{ secrets.CPANEL_SSH_KEY }}"
+        source: "build/*"
+        target: "/home/YOUR_CPanel_USER/public_html/billing"

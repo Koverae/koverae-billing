@@ -1,0 +1,36 @@
+name: Deploy Docs to CPanel
+
+on:
+  push:
+    branches:
+      - main  # Change if your default branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Docusaurus Site
+      run: npm run build
+
+    - name: Setup SSH Key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.CPANEL_SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"
+
+    - name: Deploy to CPanel
+      run: |
+        scp -r build/* c2029386c@koverae.com:/home/c2029386c/public_html/developer/billing

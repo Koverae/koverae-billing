@@ -105,10 +105,10 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Resources',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Documentation',
                 to: '/docs/intro',
               },
             ],
@@ -116,10 +116,6 @@ const config = {
           {
             title: 'Community',
             items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
               {
                 label: 'Discord',
                 href: 'https://discordapp.com/invite/docusaurus',
@@ -133,13 +129,13 @@ const config = {
           {
             title: 'More',
             items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
+            //   {
+            //     label: 'Blog',
+            //     to: '/blog',
+            //   },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/koverae/koverae-billing',
               },
             ],
           },

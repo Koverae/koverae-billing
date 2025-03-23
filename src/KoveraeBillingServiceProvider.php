@@ -20,7 +20,7 @@ class KoveraeBillingServiceProvider extends ServiceProvider
     {
         $this->publishConfig();
         $this->publishMigrations();
-
+        
         $this->commands([
             InstallCommand::class,
             SendSubscriptionRemindersCommand::class,
