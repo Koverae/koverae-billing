@@ -61,7 +61,7 @@ class Paystack implements PaymentMethodService
                 'email' => $email,
                 'amount' => $amount,
                 'plan' => $plan,
-                'callback_url' => route('paystack.callback'),// Redirect after payment
+                'callback_url' => route('billing.paystack.callback'),// Redirect after payment
                 'metadata' => [
                     'team_id' => current_company()->team->id, // Attach team ID for reference
                     'invoice_period' => $period,
