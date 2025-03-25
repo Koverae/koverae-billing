@@ -77,9 +77,6 @@ class Paystack implements PaymentMethodService
         if ($result['status']) {
             return redirect($result['data']['authorization_url']);
         }
-        // if ($result->status) {
-        //     return redirect($result->data->authorization_url);
-        // }
 
         // Return with an error message if initialization failed
         return back()->with('error', 'Payment initiation failed.');
@@ -105,6 +102,7 @@ class Paystack implements PaymentMethodService
         ]);
 
         $result = json_decode($response->getBody());
+        // json_decode($response->getBody()->getContents(), true)
 
         $team = Team::find(current_company()->team->id);
         $subscription = $team->subscription('main');
