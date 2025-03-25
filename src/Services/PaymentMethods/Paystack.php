@@ -98,29 +98,34 @@ class Paystack implements PaymentMethodService
         $response = $client->get($this->baseUrl . '/transaction/verify/' . $reference, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->secretKey,
+                'Accept' => 'application/json'
             ]
         ]);
 
-        $result = json_decode($response->getBody());
-        // json_decode($response->getBody()->getContents(), true)
+        // Ensure response is properly cast to a string before decoding
+        $result = json_decode($response->getBody()->getContents(), true);
+
+        if (!$result || !isset($result['data'])) {
+            return view('app::paystack.error', ['message' => 'Invalid response from Paystack.']);
+        }
 
         $team = Team::find(current_company()->team->id);
         $subscription = $team->subscription('main');
 
         // Extract the subscription code (if available)
-        $subscriptionCode = $result->data->plan->subscription_code ?? null;
+        $subscriptionCode = $result['data']['plan']['subscription_code'] ?? null;
 
         // If payment failed, store the transaction as "failed" and return an error page
-        if (!$result->status || $result->data->status !== 'success') {
+        if (!$result['status'] || $result['data']['status'] !== 'success') {
             Transaction::create([
                 'team_id' => $team->id,
                 'subscription_id' => $subscription->id,
-                'reference' => $result->data->reference,
-                'amount' => $result->data->amount / 100, // Convert back to major currency unit
+                'reference' => $result['data']['reference'],
+                'amount' => $result['data']['amount'] / 100, // Convert back to major currency unit
                 'currency' => 'KES',
                 'status' => 'failed',
-                'payment_method' => $result->data->channel,
-                'metadata' => json_encode($result->data),
+                'payment_method' => $result['data']['channel'],
+                'metadata' => json_encode($result['data']),
             ]);
 
             return view('app::paystack.error', ['message' => 'Payment failed. Please try again.']);
@@ -130,13 +135,16 @@ class Paystack implements PaymentMethodService
         DB::transaction(function () use ($subscription, $result, $team, $subscriptionCode) {
             // Update the subscription with the new billing period
             $subscription->update([
-                'paystack_authorization' => $team->subscription('main')->paystack_authorization ?? $result->data->authorization->authorization_code,
-                'paystack_customer' => $team->subscription('main')->paystack_customer ?? $result->data->customer->customer_code,
+                'paystack_authorization' => $team->subscription('main')->paystack_authorization ?? $result['data']['authorization']['authorization_code'],
+                'paystack_customer' => $team->subscription('main')->paystack_customer ?? $result['data']['customer']['customer_code'],
                 'subscription_code' => $subscriptionCode,
-                'invoice_period' => $result->data->metadata->invoice_period,
-                'invoice_interval' => $result->data->metadata->invoice_interval,
+                'invoice_period' => $result['data']['metadata']['invoice_period'] ?? null,
+                'invoice_interval' => $result['data']['metadata']['invoice_interval'] ?? null,
                 'starts_at' => now(),
-                'ends_at' => calculateEndDate($result->data->metadata->invoice_interval, $result->data->metadata->invoice_period),
+                'ends_at' => calculateEndDate(
+                    $result['data']['metadata']['invoice_interval'] ?? 'month',
+                    $result['data']['metadata']['invoice_period'] ?? 1
+                ),
                 'trial_ends_at' => null,
             ]);
 
@@ -144,17 +152,17 @@ class Paystack implements PaymentMethodService
             Transaction::create([
                 'team_id' => $team->id,
                 'subscription_id' => $subscription->id,
-                'reference' => $result->data->reference,
-                'amount' => $result->data->amount / 100,
+                'reference' => $result['data']['reference'],
+                'amount' => $result['data']['amount'] / 100,
                 'currency' => 'KES',
                 'status' => 'success',
-                'payment_method' => $result->data->channel,
-                'metadata' => json_encode($result->data),
+                'payment_method' => $result['data']['channel'],
+                'metadata' => json_encode($result['data']),
             ]);
         });
 
         // Return the success view with payment details
-        return view('app::paystack.success', ['data' => $result->data]);
+        return view('app::paystack.success', ['data' => $result['data']]);
     }
 
     /**
