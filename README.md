@@ -7,7 +7,7 @@
 
 [![Sparkline](https://stars.medv.io/bavix/laravel-wallet.svg)](https://stars.medv.io/bavix/laravel-wallet)
 
-koverae-billing - Manage plans, trials, and payments with clean, extensible logic.
+Koverae Billing - Manage plans, trials, and payments with clean, extensible logic.
 
 [[Documentation](https://devs.koverae.com/koverae-billing/)] 
 [[Get Started](https://devs.koverae.com/koverae-billing/guide/introduction/)] 
@@ -28,12 +28,12 @@ To perform the migration, you will be [helped by the instruction](https://devs.k
 
 ### Community
 
-I want to create a cozy place for developers using the wallet package. This will help you find bugs faster, get feedback and discuss ideas.
+I want to create a cozy place for developers using the Koverae Billing package. This will help you find bugs faster, get feedback and discuss ideas.
 
 ![telegram](https://github.com/bavix/laravel-wallet/assets/5111255/ed2b1193-c0c6-41af-83cb-0fe61ae8df21)
 
 
-Telegram: [@laravel_wallet](https://t.me/laravel_wallet)
+Telegram: [@koverae_billing](https://t.me/koverae_billing)
 
 ### Extensions
 
