@@ -211,36 +211,14 @@ $user->balance; // 237
 $user->balanceFloat; // 2.37
 ```
 
-### Performance Comparison
-
-All versions:
-|            Name            |  7.3   |  8.4   |  9.6   |  10.1  |  11.0  |
-|----------------------------|--------|--------|--------|--------|--------|
-| Atomic:Blocks              | -      | -      | 484ms  | 493ms  | 493ms  |
-| Cart:EagerLoaderPay        | 22s    | 679ms  | 493ms  | 530ms  | 652ms  |
-| Cart:Pay                   | 1.36s  | 472ms  | 288ms  | 298ms  | 336ms  |
-| Cart:PayFree               | 1.3s   | 415ms  | 281ms  | 291ms  | 287ms  |
-| Cart:PayOneItemXPieces     | 565ms  | 118ms  | 59.1ms | 64.6ms | 66.2ms |
-| Gift:Gift                  | 44.8ms | 53.5ms | 54.3ms | 58.4ms | 64.3ms |
-| Gift:Refund                | 106ms  | 112ms  | 108ms  | 111ms  | 139ms  |
-| Solo:Deposit               | 27.4ms | 31.8ms | 31ms   | 33.3ms | 30.1ms |
-| Solo:EagerLoading          | 904ms  | 1.09s  | 876ms  | 927ms  | 1.02s  |
-| Solo:ForceWithdraw         | 27.6ms | 31.8ms | 30.7ms | 32.9ms | 30ms   |
-| Solo:GetBalance            | 20.8ms | 24ms   | 23.7ms | 23.4ms | 20ms   |
-| Solo:Transfer              | 39.4ms | 45.7ms | 42ms   | 44.9ms | 46.6ms |
-| Solo:Withdraw              | 31.1ms | 36.3ms | 34.9ms | 37.3ms | 37.8ms |
-| State:InTransaction        | 570ms  | 566ms  | 419ms  | 425ms  | 427ms  |
-| State:RefreshInTransaction | 32.3ms | 41.2ms | 41.2ms | 45.6ms | 47.2ms |
-| State:TransactionRollback  | 29.7ms | 34.1ms | 32.9ms | 37.2ms | 36.9ms |
-
-Table generated using [benchmark](https://github.com/bavix/laravel-wallet-benchmark/). [Pull Request](https://github.com/bavix/laravel-wallet-benchmark/pull/51).
+Table generated using [benchmark](https://github.com/Koverae/koverae-billing-benchmark/). [Pull Request](https://github.com/Koverae/koverae-billing-benchmark/pull/51).
 
 ## Contributors
 
 ### Code Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="https://github.com/bavix/laravel-wallet/graphs/contributors"><img src="https://opencollective.com/laravel-wallet/contributors.svg?width=890&button=false" /></a>
+<a href="https://github.com/Koverae/koverae-billing/graphs/contributors"><img src="https://opencollective.com/koverae-billing/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
 
@@ -254,46 +232,4 @@ Become a financial contributor and help us sustain our community. [[Contribute](
 
 Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/laravel-wallet/contribute)]
 
-# Koverae Billing
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing)
-[![Total Downloads](https://img.shields.io/packagist/dt/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing)
-![GitHub Actions](https://github.com/koverae/koverae-billing/actions/workflows/main.yml/badge.svg)
-
-<img src="https://koverae.com/assets/images/logo/logo.png" alt="Social Card of Koverae Billing">
-
-Koverae Billing is a lightweight yet powerful Laravel package for managing subscriptions and billing. Designed for simplicity and flexibility, it enables businesses to handle subscription plans, free trials, and user billing seamlessly.
-
-
-Originally forked from [bpuig/laravel-subby](https://github.com/bpuig/laravel-subby).
-
-## Version Compatibility
-
-::: tip CURRENT VERSION Current stable version is v1.0
-:::
-
-Click on each version to read documentation.
-
-| Laravel | Koverae Billing                                  |
-|:--------|:-----------------------------------------------|
-| 9.x     | [v1.x](/docs/v1.x/), [v2.x](/docs/v2.x/)                 |
-
-
-## Credits
-
--   [Arden BOUET](https://github.com/arden28)
--   [All Contributors](../../contributors)
-
-## Changelog
-
-Refer to the [Releases](https://github.com/bpuig/laravel-subby/releases) for a changelog of the project.
-
-## License
-
-Forked originally from [bpuig/laravel-subby](https://github.com/bpuig/laravel-subby). Thank you for
-creating the original!
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-&copy; 2025 | Arden BOUET, Some rights reserved.
 
