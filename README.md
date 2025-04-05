@@ -218,18 +218,16 @@ Table generated using [benchmark](https://github.com/Koverae/koverae-billing-ben
 ### Code Contributors
 
 This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="https://github.com/Koverae/koverae-billing/graphs/contributors"><img src="https://opencollective.com/koverae-billing/contributors.svg?width=890&button=false" /></a>
 
-### Financial Contributors
-
-Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/laravel-wallet/contribute)]
-
-#### Individuals
-
-<a href="https://opencollective.com/laravel-wallet"><img src="https://opencollective.com/laravel-wallet/individuals.svg?width=890"></a>
-
-#### Organizations
-
-Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/laravel-wallet/contribute)]
+-   [Arden BOUET](https://github.com/arden28)
+-   [All Contributors](../../contributors)
 
 
+## License
+
+Forked originally from [bpuig/laravel-subby](https://github.com/bpuig/laravel-subby). Thank you for
+creating the original! :)
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+&copy; 2025 | Arden BOUET, Some rights reserved.
