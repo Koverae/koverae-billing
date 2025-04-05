@@ -1,167 +1,135 @@
 # Basic Usage
+Once installed and configured, using `koverae-billing` is straightforward and developer-friendly.
 
-## Simple Wallet
-
-<!--@include: ../../_include/models/user_simple.md -->
-
-## Simple wallet transactions
-
-The package is built on simple transactions:
-  - deposit - replenishment of the wallet;
-  - withdraw - withdrawal from the wallet;
-  
-Consider an example:
+## Models
+`koverae-billing` uses this models:
 
 ```php
-$user = User::first();
-$user->balance; // 0
-
-$user->deposit(10);
-$user->balance; // 10
-
-$user->withdraw(1);
-$user->balance; // 9
-
-$user->forceWithdraw(200, ['description' => 'payment of taxes']);
-$user->balance; // -191
+Koverae\KoveraeBilling\Models\Plan;
+Koverae\KoveraeBilling\Models\PlanCombination;
+Koverae\KoveraeBilling\Models\PlanFeature;
+Koverae\KoveraeBilling\Models\PlanSubscription;
+Koverae\KoveraeBilling\Models\PlanSubscriptionFeature;
+Koverae\KoveraeBilling\Models\PlanSubscriptionSchedule;
+Koverae\KoveraeBilling\Models\PlanSubscriptionUsage;
 ```
 
-## Purchases
+## Add Billing Support to a Model
 
-Add the `CanPay` trait and `Customer` interface to your `User` model.
-
-> The trait `CanPay` already inherits `HasWallet`, reuse will cause an error.
+To start, add the `HasSubscriptions` trait to any model you want to make billable (typically the `User` model):
 
 ```php
-use Bavix\Wallet\Traits\CanPay;
-use Bavix\Wallet\Interfaces\Customer;
+use Koverae\KoveraeBilling\Concerns\HasSubscriptions;
 
-class User extends Model implements Customer
+class User extends Authenticatable
 {
-    use CanPay;
+    use HasSubscriptions;
 }
 ```
 
-Add the `HasWallet` trait and interface to `Item` model.
+## Subscribing a User to a Plan
 
-Starting from version 9.x there are two product interfaces:
-- For an unlimited number of products (`ProductInterface`);
-- For a limited number of products (`ProductLimitedInterface`);
+You can subscribe a user (or any model correctly traited) to a plan by using the newSubscription() function available in the HasSubscriptions trait. First, retrieve an instance of your subscriber's model, which typically will be your user model and an instance of the plan your subscriber is subscribing to. Once you have retrieved the model instance, you may use the newSubscription method to create the model's subscription.
 
-An example with an unlimited number of products:
 ```php
-use Bavix\Wallet\Traits\HasWallet;
-use Bavix\Wallet\Interfaces\Customer;
-use Bavix\Wallet\Interfaces\ProductInterface;
+$user = User::find(1);
+$plan = Plan::find(1);
 
-class Item extends Model implements ProductInterface
-{
-    use HasWallet;
-
-    public function getAmountProduct(Customer $customer): int|string
-    {
-        return 100;
-    }
-
-    public function getMetaProduct(): ?array
-    {
-        return [
-            'title' => $this->title, 
-            'description' => 'Purchase of Product #' . $this->id,
-        ];
-    }
-}
+$user->newSubscription(
+            'main', // identifier tag of the subscription. If your application offers a single subscription, you might call this 'main' or 'primary'
+             $plan, // Plan or PlanCombination instance your subscriber is subscribing to
+             'Main subscription', // Human-readable name for your subscription
+             'Customer main subscription', // Description
+             null, // Start date for the subscription, defaults to now()
+             'free' // Payment method service defined in config
+             );
 ```
 
-Example with a limited number of products:
+## Checking a User’s Subscription
+For a subscription to be considered active one of the following must be true:
+- Subscription has an active trial.
+- Subscription `ends_at` is in the future.
+
+Alternatively you can use the following methods available in the subscription model:
+
 ```php
-use Bavix\Wallet\Traits\HasWallet;
-use Bavix\Wallet\Interfaces\Customer;
-use Bavix\Wallet\Interfaces\ProductLimitedInterface;
+$user->subscription('main')->isActive();
+$user->subscription('main')->isCanceled();
+$user->subscription('main')->hasEnded();
+$user->subscription('main')->hasEndedTrial();
+$user->subscription('main')->isOnTrial();
 
-class Item extends Model implements ProductLimitedInterface
-{
-    use HasWallet;
-
-    public function canBuy(Customer $customer, int $quantity = 1, bool $force = false): bool
-    {
-        /**
-         * This is where you implement the constraint logic. 
-         * 
-         * If the service can be purchased once, then
-         *  return !$customer->paid($this);
-         */
-        return true; 
-    }
-    
-    public function getAmountProduct(Customer $customer): int|string
-    {
-        return 100;
-    }
-
-    public function getMetaProduct(): ?array
-    {
-        return [
-            'title' => $this->title, 
-            'description' => 'Purchase of Product #' . $this->id,
-        ];
-    }
-}
+// To know if subscription has the same values as related plan or has been changed
+$user->subscription('main')->isAltered();
 ```
 
-I do not recommend using the limited interface when working with a shopping cart.
-If you are working with a shopping cart, then you should override the `PurchaseServiceInterface` interface.
-With it, you can check the availability of all products with one request, there will be no N-queries in the database.
-
-Proceed to purchase.
+## Cancel or Resume a Subscription
+### Renew a Subscription
+To renew a subscription you may use the `renew` method available in the subscription model. This will set a new `ends_at` date based on the selected plan.
 
 ```php
-$user = User::first();
-$user->balance; // 100
+$user->subscription('main')->renew();
 
-$item = Item::first();
-$user->pay($item); // If you do not have enough money, throw an exception
-var_dump($user->balance); // 0
-
-if ($user->safePay($item)) {
-  // try to buy again )
-}
-
-var_dump((bool)$user->paid($item)); // bool(true)
-
-var_dump($user->refund($item)); // bool(true)
-var_dump((bool)$user->paid($item)); // bool(false)
+$user->subscription('main')->renew(3); // This will triple the periods. CAUTION: If your subscription is 2 'month', you'll get 6 'month'
 ```
 
-<!--@include: ../../_include/eager_loading.md -->
+Canceled subscriptions can't be renewed. Renewing a subscription with trial period ends it.
 
-## How to work with fractional numbers?
-Add the `HasWalletFloat` trait and `WalletFloat` interface to model.
+When a subscription has already ended time ago and now is renewed, period will be set as if subscription started today, but when a subscription is still ongoing and renewed, start date is kept and end date is extended by the amount of periods specified
+
+### Cancel a Subscription
+
+To cancel a subscription, simply use the cancel method on the user's subscription:
+
 ```php
-use Bavix\Wallet\Traits\HasWalletFloat;
-use Bavix\Wallet\Interfaces\WalletFloat;
-use Bavix\Wallet\Interfaces\Wallet;
-
-class User extends Model implements Wallet, WalletFloat
-{
-    use HasWalletFloat;
-}
+$user->subscription('main')->cancel();
 ```
 
-Now we make transactions.
+#### Immediatly
+By default the subscription will remain active until the end of the period, you may pass true to end the subscription immediately:
 
 ```php
-$user = User::first();
-$user->balance; // 100
-$user->balanceFloat; // 1.00
-
-$user->depositFloat(1.37);
-$user->balance; // 237
-$user->balanceFloat; // 2.37
+$user->subscription('main')->cancel(true);
 ```
-You can get the float amount by accessing the `amountFloat` attribute on the transaction model
+
+#### Fallback plan
+If a `fallback_plan_tag` is not `null` in config, when `cancel` is called, subscription will not be canceled but changed to fallback plan.
+
+To cancel subscription and ignore fallback, a second parameter is available on `cancel` method:
 
 ```php
-$transaction->amount; // 137
-$transaction->amountFloat; // 1.37
+$user->subscription('main')->cancel(false, true);
+```
+
+### Uncancel a Subscription
+To uncancel a subscription, simply use the `uncancel` method on the user's subscription:
+
+```php
+$user->subscription('main')->uncancel();
+```
+
+## Scopes
+
+```php
+// Get subscriptions by plan
+$subscriptions = PlanSubscription::byPlanId($planId)->get();
+
+// Get bookings of the given user
+$user = \App\Models\User::find(1);
+$bookingsOfUser = PlanSubscription::ofSubscriber($user)->get(); 
+
+// Get subscriptions with trial ending in 3 days
+$subscriptions = PlanSubscription::findEndingTrial(3)->get();
+
+// Get subscriptions with ended trial
+$subscriptions = PlanSubscription::findEndedTrial()->get();
+
+// Get subscriptions with period ending in 3 days
+$subscriptions = PlanSubscription::findEndingPeriod(3)->get();
+
+// Get subscriptions with ended period
+$subscriptions = PlanSubscription::findEndedPeriod()->get();
+
+// Get subscriptions with period ending in 3 days filtered by the subscription tag
+$subscriptions = PlanSubscription::getByTag('company')->findEndingPeriod(3)->get();
 ```

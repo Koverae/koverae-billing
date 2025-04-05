@@ -1,21 +1,20 @@
 # Installation
 
-<!--@include: ../../_include/composer.md -->
+<!-- @include: ../../_include/composer.md -->
 
-## Customize
+## Composer
+To install Koverae Billing, open your terminal and navigate to your Laravel application directory, then run the following command:
 
-Sometimes it is useful...
-
-### Run Migrations
-Publish the migrations with this artisan command:
 ```bash
-php artisan vendor:publish --tag=laravel-wallet-migrations
+composer require koverae/koverae-billing
+```
+After installing the package, you will need to publish the migrations and config:
+
+```bash
+php artisan billing:install
 ```
 
-### Configuration
-You can publish the config file with this artisan command:
-```bash
-php artisan vendor:publish --tag=laravel-wallet-config
-```
+That's it — really. If you want more customization options, keep reading. Otherwise, you can jump right into using Koverae Billing.
+
 
 After installing the package, you can proceed to [use it](basic-usage) or [configure](configuration) it to suit your needs.

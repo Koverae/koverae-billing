@@ -13,18 +13,39 @@ hero:
       link: /guide/introduction/index.md
     - theme: alt
       text: Star on GitHub ⭐
-      link: https://github.com/021-projects/laravel-wallet
+      link: https://github.com/Koverae/koverae-billing
+
+featuresPerRow: 3
+
 features:
-- icon: 🔒
-  title: Reliability
-  details: The package underwent private development for years, supporting multiple financial projects before its release. Despite experiencing leaks, these incidents helped us identify and fix vulnerabilities not caught by tests. Consequently, the package now includes enhanced safeguards against emergency fund leakages.
-  link: /reliability
-- icon: 🔢
-  title: Unlimited Numbers
-  details: In PHP, the int and float types struggle with very large or small numbers. The library adopts the Numeric class, leveraging the bcmath module, for precise calculations. This approach guarantees accurate handling of the extensive numerical ranges common in cryptocurrency operations.
-  link: https://github.com/021-projects/numeric
-- icon: 🍬
-  title: Syntax Sugar
-  details: Intuitive helpers and interfaces for easy, straightforward, and concise transaction management. The package syntax is inspired by the simplicity and convenience of Laravel and the Ethereum blockchain implementation.
-  link: https://github.com/021-projects/laravel-wallet/blob/master/src/helpers.php
+- icon: 💳
+  title: Subscription Plans with Trials and Renewals
+  details: Easily define subscription plans with support for trial periods, recurring billing, upgrades, downgrades, and cancellations. Handle plan switching and trial expirations out of the box, all with simple, expressive code.
+  link: /guide/subscriptions
+
+- icon: 🔁
+  title: Customizable Charge Lifecycles
+  details: Track and manage charge states such as pending, paid, failed, refunded, and beyond. Define your own charge transitions and logic, giving you full control over how billing behaves in your app.
+  link: /guide
+
+- icon: 🧩
+  title: Lightweight and Framework-Friendly
+  details: Designed to stay out of your way. No complex configurations or magic just solid, modular billing tools that integrate cleanly into your application. Use what you need, extend what you want.
+  link: /guide
+
+- icon: ⚙️
+  title: Built for Laravel
+  details: "Leverages Laravel’s strengths: Eloquent, events, service container, and queues. You’ll feel right at home working with the package if you're already familiar with the Laravel ecosystem."
+  link: /guide
+
+- icon: 📊
+  title: Usage-Based Billing (Coming Soon)
+  details: Support for metered or usage-based billing is on the roadmap. Bill your users based on actual usage, ideal for APIs, quotas, or event-based pricing models.
+  link: /roadmap
+
+- icon: 🧠
+  title: Event-Driven & Extensible
+  details: Hook into key moments of the billing and subscription lifecycle. From trial starts to payment failures, use Laravel events to extend behavior or trigger custom workflows.
+  link: /guide
+
 ---

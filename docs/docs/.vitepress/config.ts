@@ -49,11 +49,12 @@ export default defineConfig({
           collapsed: false,
         },
         {
-          text: 'Single/Default Wallet',
+          text: 'Plans',
           items: [
-            { text: 'Deposit', link: '/guide/single/deposit' },
-            { text: 'Withdraw', link: '/guide/single/withdraw' },
-            { text: 'Transfer', link: '/guide/single/transfer' },
+            { text: 'How to Define Plans', link: '/guide/plans/plan' },
+            { text: 'Plan Combination', link: '/guide/plans/combination' },
+            { text: 'Plan Feature', link: '/guide/plans/feature' },
+            { text: 'Transfer', link: '/guide/plans/transfer' },
             { text: 'Refresh Balance', link: '/guide/single/refresh' },
             { text: 'Confirm Transaction', link: '/guide/single/confirm' },
             { text: 'Cancel Transaction', link: '/guide/single/cancel' },
