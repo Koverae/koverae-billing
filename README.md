@@ -36,6 +36,7 @@ I want to create a cozy place for developers using the Koverae Billing package. 
 Telegram: [@koverae_billing](https://t.me/koverae_billing)
 
 ### Usage
+Once installed and configured, using `koverae-billing` is straightforward and developer-friendly.
 
 #### Models
 `koverae-billing` uses this models:
