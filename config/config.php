@@ -51,7 +51,7 @@ return [
     'notification_channels' => [
         'mail',
         'database',
-        // 'vonage'
+        'vonage'
     ], // Define active channels
 
     // PAYSTACK
