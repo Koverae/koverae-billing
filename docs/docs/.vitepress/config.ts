@@ -6,14 +6,18 @@ export default defineConfig({
   base: '/koverae-billing/',
   title: "Koverae Billing",
   description: "Documentation for koverae billing package",
+  lastUpdated: true,
   head: [
-    ['link', { rel: 'icon', href: '/koverae-billing/favicon.ico?v=2' }]
+    ['link', { rel: 'icon', href: 'https://github.com/Koverae/koverae-billing/blob/main/public/images/favicon.ico' }]
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    lastUpdated: true,
     logo: '/logo.png',
+    favicon: '/logo.png',
 
+    search: {
+        provider: 'local',
+    },
     nav: [
 
       { text: 'Home', link: '/' },
@@ -31,10 +35,6 @@ export default defineConfig({
         ]
       },
     ],
-
-    search: {
-      provider: 'local',
-    },
 
     editLink: {
       pattern: 'https://github.com/Koverae/koverae-billing/tree/main/docs/docs/:path'
@@ -95,7 +95,7 @@ export default defineConfig({
         ariaLabel: 'Telegram Group'
       }
     ],
-    
+
     footer: {
       message: 'Released under the <a href="https://github.com/Koverae/koverae-billing/blob/master/LICENSE">MIT License</a>.',
       copyright: 'Copyright © 2025 <a href="https://github.com/arden28">Arden BOUET</a>'
