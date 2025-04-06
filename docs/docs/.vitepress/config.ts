@@ -25,15 +25,15 @@ export default defineConfig({
       { text: 'Issues', link: 'https://github.com/Koverae/koverae-billing/issues' },
       { text: 'Discussions', link: 'https://github.com/Koverae/koverae-billing/discussions' },
     //   { text: 'Donate', link: 'https://opencollective.com/laravel-wallet' },
-      {
-        text: 'v2',
-        items: [
-          {
-            text: 'v1',
-            link: 'https://koverae.github.io/koverae-billing/v1.x/getting-started.html'
-          }
-        ]
-      },
+    //   {
+    //     text: 'v2',
+    //     items: [
+    //       {
+    //         text: 'v1',
+    //         link: 'https://koverae.github.io/koverae-billing/v1.x/getting-started.html'
+    //       }
+    //     ]
+    //   },
     ],
 
     editLink: {
