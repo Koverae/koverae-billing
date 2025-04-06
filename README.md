@@ -1,4 +1,4 @@
-![Koverae Billing](/images/koverae-billing.png)
+![Koverae Billing](https://github.com/Koverae/koverae-billing/blob/main/public/images/koverae-billing.png)
 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing)
