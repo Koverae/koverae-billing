@@ -1,4 +1,4 @@
-![Koverae Billing](/images/koverae-billing.png)
+![Koverae Billing](https://github.com/Koverae/koverae-billing/blob/main/public/images/koverae-billing.png)
 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing)
@@ -30,7 +30,7 @@ To perform the migration, you will be [helped by the instruction](https://devs.k
 
 I want to create a cozy place for developers using the Koverae Billing package. This will help you find bugs faster, get feedback and discuss ideas.
 
-![telegram](https://github.com/bavix/laravel-wallet/assets/5111255/ed2b1193-c0c6-41af-83cb-0fe61ae8df21)
+![telegram](https://github.com/Koverae/koverae-billing/blob/main/public/images/billing-telegram.jpg)
 
 
 Telegram: [@koverae_billing](https://t.me/koverae_billing)
