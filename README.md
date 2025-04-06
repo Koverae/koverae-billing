@@ -1,4 +1,4 @@
-![Laravel Wallet](/koverae-billing.png)
+![Koverae Billing](/images/koverae-billing.png)
 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/koverae/koverae-billing.svg?style=flat-square)](https://packagist.org/packages/koverae/koverae-billing)
