@@ -1,7 +1,3 @@
----
-lastUpdated: true
----
-
 # Subscription Renewal Payment
 This is the job that needs to be called to process a subscription payment. This job does not check if the subscription is due for payment (that is done in the (Subscription Payment Queuer Job)).
 

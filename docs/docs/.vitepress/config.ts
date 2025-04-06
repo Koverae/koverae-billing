@@ -11,13 +11,7 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    lastUpdated: {
-        text: 'Updated at',
-        formatOptions: {
-          dateStyle: 'full',
-          timeStyle: 'medium'
-        }
-    },
+    lastUpdated: true,
     logo: '/logo.png',
 
     nav: [
@@ -40,6 +34,10 @@ export default defineConfig({
 
     search: {
       provider: 'local',
+    },
+
+    editLink: {
+      pattern: 'https://github.com/Koverae/koverae-billing/tree/main/docs/docs/:path'
     },
 
 
@@ -96,6 +94,11 @@ export default defineConfig({
         link: 'https://t.me/koverae_billing',
         ariaLabel: 'Telegram Group'
       }
-    ]
+    ],
+    
+    footer: {
+      message: 'Released under the <a href="https://github.com/Koverae/koverae-billing/blob/master/LICENSE">MIT License</a>.',
+      copyright: 'Copyright © 2025 <a href="https://github.com/arden28">Arden BOUET</a>'
+    }
   },
 })

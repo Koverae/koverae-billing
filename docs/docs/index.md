@@ -6,7 +6,7 @@ titleTemplate: false
 hero:
   name: "Koverae Billing"
   text: "Subscription and billing, simplified for Laravel"
-  image: /code-hero.png
+  image: /wallet.png
   actions:
     - theme: brand
       text: Get Started
