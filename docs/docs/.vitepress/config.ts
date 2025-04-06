@@ -2,7 +2,6 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-//   appearance: 'force-dark',
   base: '/koverae-billing/',
   title: "Koverae Billing",
   description: "Documentation for koverae billing package",
@@ -12,6 +11,7 @@ export default defineConfig({
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    appearance: 'force-dark',
     logo: '/logo.png',
     favicon: '/logo.png',
 
