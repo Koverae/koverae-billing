@@ -7,24 +7,26 @@ export default defineConfig({
   description: "Documentation for koverae billing package",
   lastUpdated: true,
   head: [
-    ['link', { rel: 'icon', href: 'https://github.com/Koverae/koverae-billing/blob/main/public/images/favicon.ico' }]
+    ['link', { rel: 'icon', href: 'https://github.com/bavix/laravel-wallet/assets/5111255/f48a8e79-8a9d-469a-b056-b3d04835992d' }]
   ],
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
-    appearance: 'force-dark',
-    logo: '/logo.png',
-    favicon: '/logo.png',
-
     search: {
         provider: 'local',
     },
+    editLink: {
+      pattern: 'https://github.com/Koverae/koverae-billing/tree/main/docs/docs/:path'
+    },
+    appearance: 'force-dark',
+    logo: '/logo.png',
+    favicon: '/logo.png',
     nav: [
 
       { text: 'Home', link: '/' },
       { text: 'Guide', link: '/guide/introduction/' },
       { text: 'Issues', link: 'https://github.com/Koverae/koverae-billing/issues' },
       { text: 'Discussions', link: 'https://github.com/Koverae/koverae-billing/discussions' },
-    //   { text: 'Donate', link: 'https://opencollective.com/laravel-wallet' },
     //   {
     //     text: 'v2',
     //     items: [
@@ -35,11 +37,6 @@ export default defineConfig({
     //     ]
     //   },
     ],
-
-    editLink: {
-      pattern: 'https://github.com/Koverae/koverae-billing/tree/main/docs/docs/:path'
-    },
-
 
     sidebar: [
         {
